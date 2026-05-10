@@ -9,7 +9,6 @@
   --font-family-sans: var(--font-inter);
 }
 
-/* Die PrimeNG Layer hinzufügen */
 @layer tailwind-base, primeng, tailwind-utilities;
 
 :root {
@@ -18,7 +17,6 @@
 
 body {
   font-family: var(--font-inter);
-  @apply antialiased bg-slate-900 text-white;
+  /* Heller Modus: sehr sanftes Grau. Dark Mode: Tiefes Blaugrau */
+  @apply antialiased bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100;
 }
-
-/* Icons laden */

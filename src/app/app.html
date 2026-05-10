@@ -1,6 +1,9 @@
-<div class="min-h-screen flex items-center justify-center bg-blue-950">
-  <div class="p-10 bg-blue-900 rounded-3xl shadow-2xl border border-blue-800">
-    <h1 class="text-7xl font-black text-orange-500 uppercase tracking-tighter">Alles läuft!</h1>
-    <p class="mt-4 text-2xl text-blue-200 font-medium">Der Clean-Install war erfolgreich.</p>
-  </div>
+<p-menubar
+  [model]="items"
+  class="border-b border-slate-200 dark:border-slate-800 shadow-sm sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md"
+/>
+
+<div class="min-h-[calc(100vh-60px)] pt-6">
+  <app-dashboard></app-dashboard>
+  <router-outlet></router-outlet>
 </div>
