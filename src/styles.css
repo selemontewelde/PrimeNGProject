@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+@source ".";
+@source "./app";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --font-family-sans: var(--font-inter);
+}
+
+/* Die PrimeNG Layer hinzufügen */
+@layer tailwind-base, primeng, tailwind-utilities;
+
+:root {
+  --p-font-family: var(--font-inter);
+}
+
+body {
+  font-family: var(--font-inter);
+  @apply antialiased bg-slate-900 text-white;
+}
+
+/* Icons laden */
