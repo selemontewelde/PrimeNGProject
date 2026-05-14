@@ -1,0 +1,91 @@
+<section class="scroll-mt-20">
+  <div class="mb-4">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-slate-100">Settings</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      Darstellung, Benachrichtigungen und Sensor-Schwellwerte
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <span class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+          >Darstellung</span
+        >
+      </ng-template>
+      <div class="flex items-center justify-between py-2">
+        <div>
+          <div class="font-medium text-slate-700 dark:text-slate-200">Dark Mode</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">
+            Dunkles Farbschema verwenden
+          </div>
+        </div>
+        <p-toggleswitch [(ngModel)]="dark" />
+      </div>
+      <p-divider />
+      <div class="text-xs text-slate-500 dark:text-slate-400">
+        Standardmäßig wird die System-Einstellung (<code class="font-mono">prefers-color-scheme</code>)
+        übernommen. Eine manuelle Wahl wird in <code class="font-mono">localStorage</code> persistiert.
+      </div>
+    </p-card>
+
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <span class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+          >Benachrichtigungen</span
+        >
+      </ng-template>
+      <div class="flex flex-col gap-3">
+        <label class="flex items-center justify-between py-1">
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-200">E-Mail</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Alerts per E-Mail erhalten</div>
+          </div>
+          <p-toggleswitch [(ngModel)]="notif.email" />
+        </label>
+        <label class="flex items-center justify-between py-1">
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-200">Push</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Browser-Push-Benachrichtigungen</div>
+          </div>
+          <p-toggleswitch [(ngModel)]="notif.push" />
+        </label>
+        <label class="flex items-center justify-between py-1">
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-200">SMS</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Kritische Alerts per SMS</div>
+          </div>
+          <p-toggleswitch [(ngModel)]="notif.sms" />
+        </label>
+      </div>
+    </p-card>
+
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <span class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+          >Schwellwerte</span
+        >
+      </ng-template>
+      <div class="flex flex-col gap-4">
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-semibold text-slate-500 mb-1.5"
+            >CPU-Warnung (%)</label
+          >
+          <p-inputnumber [(ngModel)]="thresholds.cpu" [min]="0" [max]="100" suffix=" %" />
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-semibold text-slate-500 mb-1.5"
+            >Temperatur (°C)</label
+          >
+          <p-inputnumber [(ngModel)]="thresholds.tempC" [min]="0" [max]="100" suffix=" °C" />
+        </div>
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-semibold text-slate-500 mb-1.5"
+            >Luftfeuchte (%)</label
+          >
+          <p-inputnumber [(ngModel)]="thresholds.humidity" [min]="0" [max]="100" suffix=" %" />
+        </div>
+      </div>
+    </p-card>
+  </div>
+</section>

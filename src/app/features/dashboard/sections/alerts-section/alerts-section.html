@@ -1,0 +1,139 @@
+<section class="scroll-mt-20">
+  <div class="mb-4">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-slate-100">Alerts</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      Aktive und quittierte Warnungen — sortierbar, filterbar, paginiert
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
+    <p-card class="xl:col-span-2" styleClass="h-full">
+      <ng-template pTemplate="title">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <span
+            class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+            >Aktive Warnungen</span
+          >
+          <p-iconfield iconPosition="left" class="w-full sm:w-72">
+            <p-inputicon class="pi pi-search" />
+            <input
+              #q
+              type="text"
+              pInputText
+              placeholder="Suchen…"
+              class="w-full"
+              (input)="applyFilter(q.value)"
+            />
+          </p-iconfield>
+        </div>
+      </ng-template>
+
+      <p-table
+        #dt
+        [value]="alerts"
+        [paginator]="true"
+        [rows]="8"
+        [rowsPerPageOptions]="[8, 15, 30]"
+        [globalFilterFields]="['device', 'message', 'severity', 'id']"
+        class="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="severity" class="!bg-slate-50 dark:!bg-slate-800/50">
+              Severity <p-sortIcon field="severity" />
+            </th>
+            <th pSortableColumn="device" class="!bg-slate-50 dark:!bg-slate-800/50">
+              Gerät <p-sortIcon field="device" />
+            </th>
+            <th class="!bg-slate-50 dark:!bg-slate-800/50 hidden md:table-cell">Nachricht</th>
+            <th
+              pSortableColumn="timestamp"
+              class="!bg-slate-50 dark:!bg-slate-800/50 w-32 hidden sm:table-cell"
+            >
+              Zeit <p-sortIcon field="timestamp" />
+            </th>
+            <th class="!bg-slate-50 dark:!bg-slate-800/50 w-32 text-right">Aktion</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-a>
+          <tr
+            class="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors"
+            [class.opacity-60]="a.acknowledged"
+          >
+            <td class="py-3">
+              <p-tag
+                [severity]="severityToTag(a.severity)"
+                [value]="severityLabel(a.severity)"
+                [icon]="severityIcon(a.severity)"
+                styleClass="text-xs font-bold"
+              />
+            </td>
+            <td class="font-medium text-slate-800 dark:text-slate-200 py-3">
+              <div class="flex flex-col">
+                <span>{{ a.device }}</span>
+                <span class="md:hidden text-xs text-slate-500 dark:text-slate-400">{{
+                  a.message
+                }}</span>
+              </div>
+            </td>
+            <td class="hidden md:table-cell text-slate-600 dark:text-slate-300 py-3">
+              {{ a.message }}
+            </td>
+            <td
+              class="hidden sm:table-cell text-xs text-slate-500 dark:text-slate-400 py-3 tabular-nums"
+            >
+              {{ a.timestamp | date: 'HH:mm' }}
+              <div class="text-[10px] text-slate-400 dark:text-slate-500">{{ fmtAgo(a.timestamp) }}</div>
+            </td>
+            <td class="text-right py-3">
+              <p-button
+                [icon]="a.acknowledged ? 'pi pi-undo' : 'pi pi-check'"
+                size="small"
+                [text]="true"
+                [severity]="a.acknowledged ? 'secondary' : 'success'"
+                (onClick)="acknowledge(a)"
+                [pTooltip]="a.acknowledged ? 'Reaktivieren' : 'Quittieren'"
+                tooltipPosition="left"
+              />
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center py-8 text-slate-500">Keine Alerts gefunden.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <p-card class="xl:col-span-1" styleClass="h-full">
+      <ng-template pTemplate="title">
+        <span class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+          >Ereignis-Timeline</span
+        >
+      </ng-template>
+      <ul class="flex flex-col">
+        @for (e of events; track e.ts) {
+          <li class="flex items-start gap-3 py-2.5 relative">
+            <div class="relative shrink-0">
+              <div
+                class="w-8 h-8 rounded-full flex items-center justify-center"
+                [ngClass]="severityIconClass(e.severity)"
+              >
+                <i [class]="e.icon + ' text-sm'"></i>
+              </div>
+            </div>
+            <div class="flex-grow min-w-0">
+              <div class="text-sm font-medium text-slate-700 dark:text-slate-200">
+                {{ e.label }}
+              </div>
+              <div class="text-[11px] text-slate-400 dark:text-slate-500 font-mono tabular-nums">
+                {{ fmtAgo(e.ts) }}
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    </p-card>
+  </div>
+</section>

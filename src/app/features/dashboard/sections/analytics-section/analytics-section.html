@@ -1,0 +1,80 @@
+<section class="scroll-mt-20">
+  <div class="mb-4">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-slate-100">Analytics</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      Telemetrie, Last-Verteilung und Sensor-Trends
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <div class="flex items-center justify-between">
+          <span
+            class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+            >Netzwerk-Traffic 24h</span
+          >
+          <i class="pi pi-chart-line text-slate-300 dark:text-slate-600"></i>
+        </div>
+      </ng-template>
+      <div class="h-72">
+        <p-chart type="line" [data]="trafficData()" [options]="lineOptions()" height="288px" />
+      </div>
+    </p-card>
+
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <div class="flex items-center justify-between">
+          <span
+            class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+            >CPU &amp; RAM pro Gerät</span
+          >
+          <i class="pi pi-microchip text-slate-300 dark:text-slate-600"></i>
+        </div>
+      </ng-template>
+      <div class="h-72">
+        <p-chart type="bar" [data]="loadData()" [options]="barOptions()" height="288px" />
+      </div>
+    </p-card>
+
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <div class="flex items-center justify-between">
+          <span
+            class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+            >Status-Verteilung</span
+          >
+          <i class="pi pi-chart-pie text-slate-300 dark:text-slate-600"></i>
+        </div>
+      </ng-template>
+      <div class="h-72 flex items-center justify-center">
+        <p-chart
+          type="doughnut"
+          [data]="statusData()"
+          [options]="doughnutOptions()"
+          height="280px"
+        />
+      </div>
+    </p-card>
+
+    <p-card styleClass="h-full">
+      <ng-template pTemplate="title">
+        <div class="flex items-center justify-between">
+          <span
+            class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+            >Sensor-Trends</span
+          >
+          <i class="pi pi-sun text-slate-300 dark:text-slate-600"></i>
+        </div>
+      </ng-template>
+      <div class="h-72">
+        <p-chart
+          type="line"
+          [data]="sensorsData()"
+          [options]="dualAxisOptions()"
+          height="288px"
+        />
+      </div>
+    </p-card>
+  </div>
+</section>

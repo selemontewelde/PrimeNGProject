@@ -4,6 +4,8 @@
 @source ".";
 @source "./app";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-inter: "Inter", sans-serif;
   --font-family-sans: var(--font-inter);
@@ -15,8 +17,12 @@
   --p-font-family: var(--font-inter);
 }
 
+html,
 body {
   font-family: var(--font-inter);
-  /* Heller Modus: sehr sanftes Grau. Dark Mode: Tiefes Blaugrau */
   @apply antialiased bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100;
+}
+
+html {
+  scroll-behavior: smooth;
 }

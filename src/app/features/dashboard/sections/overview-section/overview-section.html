@@ -1,0 +1,90 @@
+<section class="scroll-mt-20">
+  <div class="mb-4">
+    <h2 class="text-2xl md:text-3xl font-black text-slate-800 dark:text-slate-100">Übersicht</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      Globaler Status der Infrastruktur — alle Standorte
+    </p>
+  </div>
+
+  <!-- KPI Tiles -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <app-kpi-tile
+      label="Geräte gesamt"
+      [value]="kpis.totalDevices"
+      icon="pi pi-server"
+      [trend]="kpis.totalDevicesTrend"
+      severity="info"
+    />
+    <app-kpi-tile
+      label="Online"
+      [value]="kpis.onlinePct"
+      unit="%"
+      icon="pi pi-check-circle"
+      [trend]="kpis.onlinePctTrend"
+      severity="success"
+    />
+    <app-kpi-tile
+      label="Offene Alerts"
+      [value]="kpis.activeAlerts"
+      icon="pi pi-bell"
+      [trend]="kpis.activeAlertsTrend"
+      severity="danger"
+    />
+    <app-kpi-tile
+      label="Durchsatz"
+      [value]="kpis.throughputGbps"
+      unit="Gbps"
+      icon="pi pi-bolt"
+      [trend]="kpis.throughputTrend"
+      severity="info"
+    />
+  </div>
+
+  <!-- Charts + Live-Feed -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
+    <p-card class="lg:col-span-1" styleClass="h-full">
+      <ng-template pTemplate="title">
+        <span class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+          >Status-Verteilung</span
+        >
+      </ng-template>
+      <div class="h-64 flex items-center justify-center">
+        <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions" height="240px" />
+      </div>
+    </p-card>
+
+    <p-card class="lg:col-span-2" styleClass="h-full">
+      <ng-template pTemplate="title">
+        <div class="flex items-center justify-between">
+          <span
+            class="text-sm uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500"
+            >Live-Feed</span
+          >
+          <span class="text-xs text-slate-400 dark:text-slate-500">letzte 8 Ereignisse</span>
+        </div>
+      </ng-template>
+      <ul class="flex flex-col divide-y divide-slate-100 dark:divide-slate-800">
+        @for (e of events; track e.ts) {
+          <li class="flex items-center gap-3 py-2.5">
+            <div
+              class="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+              [ngClass]="severityIconClass(e.severity)"
+            >
+              <i [class]="e.icon + ' text-sm'"></i>
+            </div>
+            <div class="flex-grow min-w-0">
+              <div class="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">
+                {{ e.label }}
+              </div>
+            </div>
+            <div
+              class="text-xs text-slate-400 dark:text-slate-500 font-mono tabular-nums shrink-0"
+            >
+              {{ fmtAgo(e.ts) }}
+            </div>
+          </li>
+        }
+      </ul>
+    </p-card>
+  </div>
+</section>

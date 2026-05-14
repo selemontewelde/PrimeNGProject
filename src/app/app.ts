@@ -1,23 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 import { DashboardComponent } from './dashboard/dashboard';
-import { MenubarModule } from 'primeng/menubar';
-import { MenuItem } from 'primeng/api';
+import { AppHeader } from './layout/app-header/app-header';
+import { MobileDrawer } from './layout/mobile-drawer/mobile-drawer';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DashboardComponent, MenubarModule],
+  imports: [AppHeader, DashboardComponent, MobileDrawer],
   templateUrl: './app.html',
 })
-export class App implements OnInit {
-  items: MenuItem[] | undefined;
-
-  ngOnInit() {
-    this.items = [
-      { label: 'Dashboard', icon: 'pi pi-home' },
-      { label: 'Netzwerk', icon: 'pi pi-sitemap' },
-      { label: 'Einstellungen', icon: 'pi pi-cog' },
-    ];
-  }
-}
+export class App {}
